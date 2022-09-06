@@ -1,0 +1,46 @@
+html {
+    overflow: auto;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.footer {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+}
+
+.content {
+    margin-bottom: 50px;
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.userinfo {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-end;
+}
+
+.userinfo img {
+    width: 39px;
+    height: 39px;
+}
+
+.userinfo div {
+    margin: auto 10px;
+    font-weight: bold;
+    color: rgba(255,255,255,.5);
+}

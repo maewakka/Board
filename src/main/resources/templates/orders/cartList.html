@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout1}">
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+
+    $(document).ready(function(){
+      $("#searchBtn").on("click",function(e) {
+        e.preventDefault();
+        page(0);
+      });
+    });
+
+    function page(page){
+      var searchDateType = $("#searchDateType").val();
+      var searchBy = $("#searchBy").val();
+      var searchQuery = $("#searchQuery").val();
+
+      location.href="/cartList/register/list/" + page + "?searchDateType=" + searchDateType
+              + "&searchBy=" + searchBy
+              + "&searchQuery=" + searchQuery;
+    }
+
+  </script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+  <style>
+    select{
+      margin-right:10px;
+    }
+  </style>
+</th:block>
+
+<div layout:fragment="content">
+  <h1>장바구니</h1>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <td>상품이름</td>
+      <td>상품가격</td>
+      <td>갯수</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cart : ${cartList}">
+      <td th:text="${cart.itemName}"></td>
+      <td th:text="${cart.itemPrice}"></td>
+      <td th:text="${cart.itemNum}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+
+
+
+</div>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:class="table_content"th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout1}">
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+
+    <script th:inline="javascript">
+        let image_length = [[${itemViewDto.imgUrlList.size}]];
+        let images = [[${itemViewDto.imgUrlList}]]
+        let this_image = 0;
+        let re_draw = () => {
+            let url = images[this_image];
+            document.getElementById("item_img").src = url;
+        }
+
+        let move_left = () => {
+            if(this_image == 0) {
+                this_image = 0;
+            }
+            else {
+                this_image -= 1;
+            }
+            console.log(this_image);
+            re_draw();
+        }
+
+        let move_right = () => {
+            if(this_image == image_length-1) {
+                this_image = image_length-1;
+            }
+            else {
+                this_image += 1
+            }
+            console.log(this_image);
+            re_draw();
+        }
+
+    </script>
+
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .view_container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .item_header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .item_image {
+            display: flex;
+            flex-direction: row;
+            height: 300px;
+
+        }
+        #item_img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+        }
+        .sell_status{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            height: 300px;
+            margin-left: 20px;
+        }
+        .details {
+            width: 100%;
+            height: 200px;
+            border: 1px solid black;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+    </style>
+</th:block>
+
+<div layout:fragment="content" >
+
+<!--    <div style="display: flex; align-items: flex-end; justify-content: flex-end; margin: 10px; width: 98%">-->
+<!--        <button onclick="location.href='/boards/notice'" class="btn btn-outline-secondary">돌아가기</button>-->
+<!--    </div>-->
+    <div class="view_container">
+        <div class="item_header">
+            <div class="item_image">
+                <button id="left_img_btn" th:onclick="move_left()" class="btn btn-light"><</button>
+                <img id="item_img" th:src="${itemViewDto.imgUrlList.get(0)}">
+                <button id="right_img_btn" th:onclick="move_right()" class="btn btn-light">></button>
+            </div>
+
+            <div class="sell_status">
+                <h1 th:text="${itemViewDto.itemName}"></h1>
+                <h2 th:text="|${itemViewDto.itemPrice}원|"></h2>
+                <div th:text="|재고 : ${itemViewDto.stockNumber}|"></div>
+                <form role="form" method="post" th:object="${orderFormDto}" sec:authorize="isAuthenticated()">
+                    <input type="hidden" th:field="*{itemId}" th:value="${itemViewDto.id}">
+                    <input th:field="*{itemNum}" name="number" type="number" min="1" max="100" value="1">
+                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        <button th:formaction="@{/cart/add}" type="submit">장바구니</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+<!--        <div class="details" th:text="${itemViewDto.itemDetails}"></div>-->
+
+
+<!--        <div>-->
+<!--            <button th:if="${#strings.equals(boardFormDto.createdBy, session.user?.email)}" th:onclick="|move_update(${boardFormDto.id})|" class="btn btn-outline-secondary">수정</button>-->
+<!--        </div>-->
+    </div>
+</div>
+
+
+</html>

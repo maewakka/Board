@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="header">
+  <nav class="navbar navbar-expand-sm bg-primary navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">Shop</a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/shop">상품</a>
+        </li>
+        <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('SELLER', 'ADMIN')">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">상품관리</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/items/register">상품등록</a>
+            <a class="dropdown-item" href="/items/register/list">등록상품 목록</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('SELLER', 'ADMIN')">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">주문관리</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">주문목록</a>
+          </div>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <a class="nav-link" href="/cart">장바구니</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <a class="nav-link" href="/orders">내정보</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/boards/notice">공지사항</a>
+        </li>
+      </ul>
+<!--      <form class="form-inline my-2 my-lg-0" th:action="@{/}" method="get">-->
+<!--        <input name="searchQuery" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+<!--      </form>-->
+
+      <div class="userinfo" sec:authorize="isAuthenticated()">
+        <img th:src="${session?.user.picture}"/>
+        <div th:text="|${session?.user.name} 님|"></div>
+        <button type="button" class="btn btn-outline-warning" onclick="location.href='/logout'">
+          Log Out
+        </button>
+      </div>
+
+      <div sec:authorize="isAnonymous()" class="btn-group">
+        <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Log In
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item" type="button" onclick="location.href='/oauth2/authorization/google'">Google Login</button>
+          <button class="dropdown-item" type="button" onclick="location.href='/oauth2/authorization/naver'">Naver Login</button>
+          <button class="dropdown-item" type="button" onclick="location.href='/oauth2/authorization/kakao'">Kakao Login</button>
+        </div>
+      </div>
+
+
+    </div>
+  </nav>
+</div>
+
+</html>
