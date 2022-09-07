@@ -21,7 +21,7 @@
         let this_image = 0;
         let re_draw = () => {
             let url = images[this_image];
-            document.getElementById("item_img").src = url;
+            document.getElementById("items_img").src = url;
         }
 
         let move_left = () => {
@@ -67,7 +67,7 @@
             justify-content: space-around;
             width: 100%;
         }
-        .item_image {
+        .items_image {
             display: flex;
             flex-direction: row;
             height: 300px;
@@ -104,7 +104,7 @@
     </div>
     <div class="view_container">
         <div class="item_header">
-            <div class="item_image">
+            <div class="items_image">
                 <button id="left_img_btn" th:onclick="move_left()" class="btn btn-light"><</button>
                 <img id="item_img" th:src="${itemViewDto.imgUrlList.get(0)}">
                 <button id="right_img_btn" th:onclick="move_right()" class="btn btn-light">></button>
