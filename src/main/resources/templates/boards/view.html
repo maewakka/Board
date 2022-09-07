@@ -138,7 +138,7 @@
         <td th:text="${chat.createdDate}"></td>
       </tr>
     </table>
-    <form role="form" method="post" th:object="${chatFormDto}" sec:authorize="isAuthenticated()">
+    <form class="chat_form" role="form" method="post" th:object="${chatFormDto}" sec:authorize="isAuthenticated()">
       <input type="hidden" th:field="*{boardId}" th:value="${boardFormDto.id}">
       <input th:field="*{content}" type="text">
       <div class="btn-group" role="group" aria-label="Basic outlined example">
