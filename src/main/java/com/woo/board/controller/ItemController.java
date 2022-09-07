@@ -77,6 +77,6 @@ public class ItemController {
         model.addAttribute("itemViewDto", itemViewDto);
         model.addAttribute("orderFormDto", orderFormDto);
 
-        return "/items/itemView";
+        return "items/itemView";
     }
 }
