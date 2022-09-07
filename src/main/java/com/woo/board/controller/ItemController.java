@@ -68,7 +68,7 @@ public class ItemController {
         model.addAttribute("itemSearchDto", itemSearchDto);
         model.addAttribute("maxPage", 5);
 
-        return "/items/registerList";
+        return "items/registerList";
     }
 
     @GetMapping("/shop/items/{itemId}")
