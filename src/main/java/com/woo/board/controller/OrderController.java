@@ -29,7 +29,7 @@ public class OrderController {
     private String cartDtl(@LoginUser SessionUser user, Model model) {
         List<CartListDto> cartList = orderService.getCartList(user);
         model.addAttribute("cartList", cartList);
-        return "/orders/cartList";
+        return "orders/cartList";
     }
 
 }

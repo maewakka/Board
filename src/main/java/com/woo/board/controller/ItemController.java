@@ -35,18 +35,18 @@ public class ItemController {
     public String registerDtl(Model model) {
         model.addAttribute("itemRegFormDto", new ItemRegFormDto());
 
-        return "/items/register";
+        return "items/register";
     }
 
     @PostMapping("/items/register")
     public String item_register(@Valid ItemRegFormDto itemRegFormDto, BindingResult bindingResult,
                                 Model model, @RequestPart("itemImgFile") List<MultipartFile> itemImgFileList) {
         if(bindingResult.hasErrors()) {
-            return "/items/register";
+            return "items/register";
         }
         if(itemImgFileList.get(0).isEmpty()) {
             model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값입니다.");
-            return "/items/register";
+            return "items/register";
         }
 
         try {
