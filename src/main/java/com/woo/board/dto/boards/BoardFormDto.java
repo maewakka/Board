@@ -27,6 +27,9 @@ public class BoardFormDto {
     private String content;
 
     private List<String> imgUrlList;
+    private List<BoardFormDto> boardImgDtoList = new ArrayList<>();
+
+    private List<Long> boardImgIds = new ArrayList<>();
     private static ModelMapper modelMapper = new ModelMapper();
 
     public Boards toEntity() {
