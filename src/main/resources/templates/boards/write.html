@@ -104,6 +104,25 @@
 <!--        </div>-->
 <!--      </div>-->
 <!--    </div>-->
+    <div th:if="${#lists.isEmpty(boardFormDto.boardImgDtoList)}">
+      <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">
+        <div class="custom-file img-div">
+          <input type="file" class="custom-file-input" name="boardImgFile">
+          <label class="custom-file-label" th:text="이미지 + ${num}"></label>
+        </div>
+      </div>
+    </div>
+
+    <div th:if = "${not #lists.isEmpty(boardFormDto.boardImgDtoList)}">
+      <div class="form-group" th:each="itemImgDto, status: ${boardFormDto.boardImgDtoList}">
+        <div class="custom-file img-div">
+          <input type="file" class="custom-file-input" name="boardImgFile">
+          <input type="hidden" name="itemImgIds" th:value="${boardImgDto.id}">
+          <label class="custom-file-label" th:text="${not #strings.isEmpty(boardImgDto.oriImgName)} ? ${boardImgDto.oriImgName} : '상품이미지' + ${status.index+1}"></label>
+        </div>
+      </div>
+    </div>
+    
 
     <div th:if="${#strings.isEmpty(boardFormDto.id)}" style="text-align: center">
       <button th:formaction="@{/boards/notice/write}" type="submit" class="btn btn-outline-secondary">저장</button>

@@ -8,6 +8,14 @@
 <th:block layout:fragment="script">
 
     <script th:inline="javascript">
+        $(document).ready(function(){
+            var message = [[${message}]];
+            if(message != null){
+                alert(message);
+            }
+        });
+
+
         let image_length = [[${itemViewDto.imgUrlList.size}]];
         let images = [[${itemViewDto.imgUrlList}]]
         let this_image = 0;
@@ -91,9 +99,9 @@
 
 <div layout:fragment="content" >
 
-<!--    <div style="display: flex; align-items: flex-end; justify-content: flex-end; margin: 10px; width: 98%">-->
-<!--        <button onclick="location.href='/boards/notice'" class="btn btn-outline-secondary">돌아가기</button>-->
-<!--    </div>-->
+    <div style="display: flex; align-items: flex-end; justify-content: flex-end; margin: 10px; width: 98%">
+        <button onclick="location.href='/shop'" class="btn btn-outline-secondary">돌아가기</button>
+    </div>
     <div class="view_container">
         <div class="item_header">
             <div class="item_image">
@@ -111,6 +119,7 @@
                     <input th:field="*{itemNum}" name="number" type="number" min="1" max="100" value="1">
                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                         <button th:formaction="@{/cart/add}" type="submit">장바구니</button>
+                        <button th:formaction="@{/order/add}" type="submit">주문하기</button>
                     </div>
                 </form>
             </div>

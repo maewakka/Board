@@ -12,26 +12,26 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-public class Cart extends BaseEntity {
+public class Orders extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Items items;
+    private int itemNum;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    private int itemNum;
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Items item;
 
     @Builder
-    public Cart(Items items, int itemNum, User user) {
-        this.items = items;
+    public Orders(int itemNum, User user, Items item) {
         this.itemNum = itemNum;
         this.user = user;
+        this.item = item;
     }
 }

@@ -16,6 +16,13 @@
 
       bindDomEvent();
 
+      let board_img = document.getElementsByClassName('board_img');
+      let percent = 100 / board_img.length;
+
+      for(let i=0; i<board_img.length; i++) {
+        board_img[i].style.width = percent + "%";
+      }
+
     });
 
     function bindDomEvent(){
@@ -64,8 +71,29 @@
       text-align: left;
     }
     #view_content {
-      height: 300px;
+      height: 200px;
       overflow: auto;
+    }
+    .board_img_container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+    .board_img {
+      height: 300px;
+    }
+    .img {
+      width: 100%;
+      height: 300px;
+    }
+    .chat_form {
+      width: 100%;
+      height: 50px;
+    }
+    .chat_form input {
+      width: 88%;
+      height: 50px;
     }
 
   </style>
@@ -89,13 +117,34 @@
       </tr>
       <tr>
         <td class="table_title">내용</td>
-        <td class="table_content" th:text="${boardFormDto.content}" id="view_content"></td>
+        <td class="table_content" th:text="${boardFormDto.content}" id="view_content">
+        </td>
       </tr>
     </table>
+    <div class="board_img_container" >
+      <div class="board_img" th:each="boardImg: ${boardFormDto.imgUrlList}">
+        <img class="img" th:src="${boardImg}">
+      </div>
+    </div>
 
     <div>
       <button th:if="${#strings.equals(boardFormDto.createdBy, session.user?.email)}" th:onclick="|move_update(${boardFormDto.id})|" class="btn btn-outline-secondary">수정</button>
     </div>
+
+    <table class="table">
+      <tr th:if="${chatList != null}" th:each="chat : ${chatList}">
+        <td th:text="${chat.content}"></td>
+        <td th:text="${chat.userName}"></td>
+        <td th:text="${chat.createdDate}"></td>
+      </tr>
+    </table>
+    <form role="form" method="post" th:object="${chatFormDto}" sec:authorize="isAuthenticated()">
+      <input type="hidden" th:field="*{boardId}" th:value="${boardFormDto.id}">
+      <input th:field="*{content}" type="text">
+      <div class="btn-group" role="group" aria-label="Basic outlined example">
+        <button th:formaction="@{/boards/chat/add}" type="submit">댓글달기</button>
+      </div>
+    </form>
   </div>
 </div>
 
